@@ -8,11 +8,12 @@ def obtenerTiempo(origen,destino):
 		# Obtenemos el json
 		data = json.loads(response.read())
 
-		archivo = open("ElYeison.txt",w)
-		archivo2 = open("Respuesta.json",w)
-
+		archivo = open("ElYeison.txt","w")
+		archivo2 = open("Respuesta.json","w")
+		
 		archivo.write(data)
 		archivo.close()
+		archivo2.close()
 		print data
 	except:
 		print("No se puede conectar a internet")
