@@ -45,7 +45,7 @@ def entrada():
 	archivo.write("\nOrigen: " + RegOrigen + "\nDestino: " + RegDestino + "\n\n")
 	archivo.close()
 	try:
-		for i in range(1,2):
+		for i in range(1,48):
 			archivo = open("registroTiempos.txt","a")
 			tiempoTraslado = googleAPI.obtenerTiempo(Origen,Destino)
 			archivo.write("Ida:\n")
