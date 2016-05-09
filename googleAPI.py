@@ -35,6 +35,8 @@ def obtenerTiempo(origen,destino):
 		# archivo2.close()
 		print data['rows'][0]['elements'][0]['duration']['text']
 		return data['rows'][0]['elements'][0]['duration']['text']
+	except IOError:
+		print("Error con la concección")
 	except:
 		print("No se puede conectar a internet")
 		return "ERROR"
