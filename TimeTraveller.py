@@ -19,7 +19,7 @@ def responder():
 		return False
 	else:
 		print("Respuesta no valida")
-		responder()
+		return False
 def escoger():
 	print("\n\n1.-Consulta\n2.-Registro\n3.-Salir")
 	respuesta = int(raw_input("Opcion: "))
@@ -108,25 +108,5 @@ def entrada():
 		registro(Origen,Destino)
 	else:
 		print("Auf Wiedersehen")
-
-
-	# try:
-	# 	for i in range(1,48):
-	# 		archivo = open("registroTiempos.txt","a")
-	# 		tiempoTraslado = googleAPI.obtenerTiempo(Origen,Destino)
-	# 		archivo.write("Ida:\n")
-	# 		registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
-	# 		archivo.write(registro)
-	# 		tiempoTraslado = googleAPI.obtenerTiempo(Destino,Origen)
-	# 		archivo.write("Regreso:\n")
-	# 		registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
-	# 		archivo.write(registro)
-	# 		archivo.close()
-	# 		time.sleep(tiempo)
-
-	# except KeyboardInterrupt:
-	# 	print("Proceso interrumpido")
-	# except:
-	# 	print("Algo salio mal")
 
 entrada()
