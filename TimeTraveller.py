@@ -91,9 +91,9 @@ def entrada():
 	for palabra in palabrasSepa:
 		Destino += palabra
 	googleAPI.obtenerDirecciones(Origen,Destino)
-	# respuesta = responder()
-	# if respuesta == False:
-	# 	entrada()
+	respuesta = responder()
+	if respuesta == False:
+		entrada()
 	dia = time.strftime("%d/%m/%y")
 	nombreArchivo = "registro" + dia
 
