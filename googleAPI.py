@@ -8,13 +8,19 @@ def obtenerDirecciones(origen,destino):
 	data = json.load(response)
 	lista = data['origin_addresses']
 	print ("\n")
+	if lista[0] == "":
+		raise KeyError
 	print lista[0]
 	lista = data['destination_addresses']
+	if lista[0] == "":
+		raise KeyError
 	print("\n")
 	print lista[0]
 	print ("\n")
+	# except KeyError:
+	print("No se pudo obtener los datos")
 	# except:
-	# print("Algo salió mal")
+	print("Algo salió mal")
 
 def obtenerTiempo(origen,destino):
 	try:
@@ -36,7 +42,9 @@ def obtenerTiempo(origen,destino):
 		print data['rows'][0]['elements'][0]['duration']['text']
 		return data['rows'][0]['elements'][0]['duration']['text']
 	except IOError:
-		print("Error con la concección")
+		print("Error con la conexión")
+	except KeyError:
+		print("No se pudo obtener los datos")
 	except:
 		print("No se puede conectar a internet")
 		return "ERROR"
