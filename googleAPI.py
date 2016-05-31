@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import urllib, json
 from pprint import pprint
+import colorText
 
 """
 	Funcion: obtenerDirecciones

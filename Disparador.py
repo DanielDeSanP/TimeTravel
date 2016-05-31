@@ -1,3 +1,3 @@
 import TimeTraveller
 
-TimeTraveller.entrada()
+TimeTraveller.pedirDireccion()
