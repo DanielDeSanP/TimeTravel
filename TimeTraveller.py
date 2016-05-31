@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import googleAPI
 import time
+from osName import clear
 """
 	Programa diseñado para hacer un registro
 	estadístico de tiempos de traslado de un punto a otro.
@@ -32,7 +33,7 @@ def responder():
 		return False
 
 """
-	Funcion: escoger
+	Funcion: desplegar menu 1
 	Entrada: void
 	Salida: entero
 	Proceso:
@@ -42,17 +43,50 @@ def responder():
 		bandera que servirá en la funcion entrada.
 
 """
-def escoger():
-	print("\n\n1.-Consulta\n2.-Registro\n3.-Salir")
-	respuesta = int(raw_input("Opcion: "))
-	if respuesta == 1:
-		return 1
-	elif respuesta == 2:
-		return 2
-	elif respuesta == 3:
-		return 3
-	else:
-		escoger()
+def desplegarMenu1():
+	try:
+		clear()
+		print("\n\n1.-Consulta\n2.-Registro\n3.-Salir")
+		respuesta = int(raw_input("Opcion: "))
+		if respuesta == 1:
+			return 1
+		elif respuesta == 2:
+			return 2
+		elif respuesta == 3:
+			return 3
+		else:
+			desplegarMenu1()
+	except ValueError:
+		print("ERROR Tipo de valor no admitido")
+		desplegarMenu1()
+"""
+	Funcion: desplegar menu 2
+	Entrada: void 
+	Salida: entero
+	Proceso:
+		Hace lo mismo que la funcion desplegar menu 1, solo que
+		este despliega un menu, con una opcion más, para cuando
+		se haya realizado una vez el proceso. 
+
+"""
+
+def desplegarMenu2():
+	try:
+		clear()
+		print("\n\n1.-Consulta\n2.-Registro\n3.-Introducir Nuevas direcciones\n4.-Salir")
+		respuesta = int(raw_input("Opcion: "))
+		if respuesta == 1:
+			return 1
+		elif respuesta == 2:
+			return 2
+		elif respuesta == 3:
+			return 3
+		elif respuesta == 4:
+			return 4
+		else:
+			desplegarMenu2()
+	except ValueError:
+		desplegarMenu2()	
 """
 	Funcion: registro
 	Entrada: str Origen, str Destino
@@ -134,7 +168,38 @@ def consulta(Origen,Destino):
 	except:
 		print("Algo Salio Mal")
 """
-	Funcion: entrada
+	Funcion: pedir direccion
+	Entrada: void
+	Salida: void
+	Proceso:
+		La funcion se encarga de pedir al usuario las referencias del origen y el destino.
+		Hace un formato a la cadena para concatenar con un url para hacer la peticion de tiempo
+		HTTPS.
+
+"""
+def pedirDireccion():
+	clear()
+	Origen = ""
+	Destino = ""
+	firstExecution = True
+	entrada = raw_input("Origen: ")
+	RegOrigen = entrada
+	palabrasSepa = entrada.split(" ")
+
+	for palabra in palabrasSepa:
+		Origen += palabra
+
+	entrada = raw_input("Destino: ")
+	RegDestino = entrada
+	palabrasSepa = entrada.split(" ")
+
+	for palabra in palabrasSepa:
+		Destino += palabra
+	if RegOrigen == "" or RegDestino == "":
+		pedirDireccion()
+	ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution)
+"""
+	Funcion: ejecutar
 	Entrada: void
 	Salida: void 
 	Proceso:
@@ -153,45 +218,43 @@ def consulta(Origen,Destino):
 		escogida, enviando como parametros de entrada Origen y Destino. 
 
 """
-
-def entrada():
+def ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution):
 	try:
-		entrada = raw_input("Origen: ")
-		RegOrigen = entrada
-		palabrasSepa = entrada.split(" ")
-		Origen = ""
-		Destino = ""
+		if firstExecution == True:
+			googleAPI.obtenerDirecciones(Origen,Destino)
+			respuesta = responder()
+	 		# Falta corregir esta parte
 
-		for palabra in palabrasSepa:
-			Origen += palabra
-		entrada = raw_input("Destino: ")
-		RegDestino = entrada
-		palabrasSepa = entrada.split(" ")
-
-		for palabra in palabrasSepa:
-			Destino += palabra
-		googleAPI.obtenerDirecciones(Origen,Destino)
-		respuesta = responder()
-
-		if respuesta == False:
-			o = entrada()
-		else:
+			if respuesta == False:
+				pedirDireccion()
 
 			dia = time.strftime("%d/%m/%y")
 			nombreArchivo = "registro" + dia
 
-			archivo = open("registroTiempos.txt" + ".txt","w")
+			archivo = open("registroTiempos" + ".txt","w")
 			archivo.write("\n" + dia)
 			archivo.write("\nOrigen: " + RegOrigen + "\nDestino: " + RegDestino + "\n\n")
 			archivo.close()
-			respuesta = escoger()
-			if respuesta == 1:
-				consulta(Origen,Destino)
-			elif respuesta == 2:
-				registro(Origen,Destino)
-			else:
-				print("Auf Wiedersehen")
+			respuesta = desplegarMenu1()
+		else:
+			respuesta = desplegarMenu2()
+
+		if respuesta == 1:
+			consulta(Origen,Destino)
+			firstExecution = False
+			enter = raw_input("Presione enter...")
+			ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution)
+		elif respuesta == 2:
+			registro(Origen,Destino)
+			firstExecution = False
+			enter = raw_input("Presione enter...")
+			ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution)
+		elif respuesta == 3 and firstExecution == False:
+			pedirDireccion()
+		else:
+			print("Auf Wiedersehen")
+			quit()
 	except KeyError:
 		print("Error al obtener los datos")
-	finally:
-		print("Proceso terminado")
+	except KeyboardInterrupt:
+		print("Proceso interrumpido")
