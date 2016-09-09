@@ -3,6 +3,8 @@ import urllib, json
 from pprint import pprint
 import colorText
 
+colores = colorText.bcolors
+
 """
 	Funcion: obtenerDirecciones
 	Entrada: str origen, str destino
@@ -73,7 +75,7 @@ def obtenerTiempo(origen,destino):
 		data = json.load(response)
 		print("Obtuvimos los datos...")
 		# Imprimimos el tiempo
-		print data['rows'][0]['elements'][0]['duration']['text']
+		print (colores.OKGREEN +  data['rows'][0]['elements'][0]['duration']['text'] + colores.ENDC)
 		# Retornamos el tiempo en forma de cadena.
 		return data['rows'][0]['elements'][0]['duration']['text']
 	except IOError:

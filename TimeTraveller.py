@@ -2,6 +2,9 @@
 import googleAPI
 import time
 from osName import clear
+import colorText
+
+colores = colorText.bcolors
 """
 	Programa diseñado para hacer un registro
 	estadístico de tiempos de traslado de un punto a otro.
@@ -155,7 +158,7 @@ def consulta(Origen,Destino):
 		archivo.write("Ida:\n")
 		registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
 		archivo.write(registro)
-		print("Regreso: ")
+		print(colores.OKBLUE + "Regreso: " + colores.ENDC)
 		tiempoTraslado = googleAPI.obtenerTiempo(Destino,Origen)
 		archivo.write("Regreso:\n")
 		registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
