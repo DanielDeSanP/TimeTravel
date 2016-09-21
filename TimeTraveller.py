@@ -234,7 +234,7 @@ def ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution):
 			dia = time.strftime("%d/%m/%y")
 			nombreArchivo = "registro" + dia
 
-			archivo = open("registroTiempos" + ".txt","w")
+			archivo = open("registroTiempos.txt","w")
 			archivo.write("\n" + dia)
 			archivo.write("\nOrigen: " + RegOrigen + "\nDestino: " + RegDestino + "\n\n")
 			archivo.close()
