@@ -22,30 +22,35 @@ import colorText
 
 """
 def obtenerDirecciones(origen,destino):
-	# Concatenamos la cadena con el url, para llamar la api de google. 
-	url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origen + "|&destinations=" + destino + "&mode=driving&language=fr-SP"
-	# Obtenemos la respuesta en response
-	response = urllib.urlopen(url)
-	# Cargamos el json
-	data = json.load(response)
-	# Obtenemos la direccion del origen
-	lista = data['origin_addresses']
-	print ("\n")
-	# Se compara si la cadena está vacia.
-	if lista[0] == "":
-		raise KeyError
-	# Si la cadena no está vacia se despliega en pantalla
-	print lista[0]
-	# Obtenemos la direccion del destino
-	lista = data['destination_addresses']
-	# Comprobamos si no está vacia.
-	if lista[0] == "":
-		raise KeyError
-	print("\n")
-	# Imprimimos la informacion 
-	print lista[0]
-	print ("\n")
-
+	try:
+		# Concatenamos la cadena con el url, para llamar la api de google. 
+		url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origen + "|&destinations=" + destino + "&mode=driving&language=fr-SP"
+		# Obtenemos la respuesta en response
+		response = urllib.urlopen(url)
+		# Cargamos el json
+		data = json.load(response)
+		# Obtenemos la direccion del origen
+		lista = data['origin_addresses']
+		print ("\n")
+		# Se compara si la cadena está vacia.
+		if lista[0] == "":
+			raise KeyError
+		# Si la cadena no está vacia se despliega en pantalla
+		print lista[0]
+		# Obtenemos la direccion del destino
+		lista = data['destination_addresses']
+		# Comprobamos si no está vacia.
+		if lista[0] == "":
+			raise KeyError
+		print("\n")
+		# Imprimimos la informacion 
+		print lista[0]
+		print ("\n")
+	except IOError:
+		print("Error con la conexión")
+		exit()
+	except:
+		print("Error")
 
 """
 	Funcion: obtenerTiempo
