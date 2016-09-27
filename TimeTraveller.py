@@ -129,7 +129,7 @@ def registro(Origen,Destino):
 		tiempo = 60 * 30
 		for i in range(1,48):
 			# Abrimos archivo de registros
-			archivo = open("/Users/rs-ultra/bin/resources/registroTiempos.txt","a")
+			archivo = open("registroTiempos.txt","a")
 			print("Ida: ")
 			# llamamos a la funcion obtenerTiempo del modulo googleAPI
 			tiempoTraslado = googleAPI.obtenerTiempo(Origen,Destino)
