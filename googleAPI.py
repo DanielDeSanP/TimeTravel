@@ -1,7 +1,11 @@
 # -*- coding:utf-8 -*-
 import urllib, json
-from pprint import pprint
+# from pprint import pprint
 import colorText
+
+# urlib -> HTTP request
+# json -> manejo de json
+# colorText -> dar color al texto
 
 """
 	Funcion: obtenerDirecciones
@@ -47,9 +51,11 @@ def obtenerDirecciones(origen,destino):
 		print lista[0]
 		print ("\n")
 	except IOError:
+		# En caso de que no haya conexion a Internet
 		print("Error con la conexión")
 		exit()
 	except:
+		# En caso de qu otro error haya ocurrido
 		print("Error")
 
 """
@@ -82,13 +88,16 @@ def obtenerTiempo(origen,destino):
 		# Retornamos el tiempo en forma de cadena.
 		return data['rows'][0]['elements'][0]['duration']['text']
 	except IOError:
+		# En caso de que no haya conexion a internet
 		print("Error con la conexión")
 		return "ERROR"
 	except KeyError:
+		# En caso de que no se haya obtenido los datos del jason 
 		print("No se pudo obtener los datos")
 		return "ERROR"
 	except:
-		print("No se puede conectar a internet")
+		# En caso de que otro error haya ocurrido
+		print("Algo ocurrió mal")
 		return "ERROR"
 	finally:
 		print("Espere...")
