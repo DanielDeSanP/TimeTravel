@@ -4,6 +4,15 @@ import time
 from osName import clear
 import colorText
 
+"""
+	googleAPI -> Módulo implementado que se conecta a la API de Google
+	time -> Para obtener la fecha
+	osName -> Para obtener el comando clear correspondiente a sistemas 
+				UNIX o Windows
+	colorText -> Para dar formato y color a los textos de salida.
+
+"""
+
 colores = colorText.bcolors()
 
 # googleAPI -> métodos para conectarse a la API de google
