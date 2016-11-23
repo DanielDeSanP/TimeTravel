@@ -111,7 +111,14 @@ def registro(Origen,Destino):
 		tiempo = tiempo * 60
 
 		nu_capturas = int(raw_input("Ingresa el numero de captura de datos: "))
+		ruta_absoluta = raw_input("Si deseas ingresar alguna ruta para el archivo de registros, escríbela,\nsi no, simplemente presiona enter...")
 		clear()
+		dia = time.strftime("%d/%m/%y")
+		archivo = open(ruta_absoluta + "registroTiempos.txt","w")
+		archivo.write("\n" + dia)
+		archivo.write("\nOrigen: " + Origen + "\nDestino: " + Destino + "\n\n")
+		archivo.close()
+
 		print "Intervalos entre caputura de datos: " + str(tiempo/60)
 		print "Numero de capturas de datos: " + str(nu_capturas)
 		for i in range(1,nu_capturas):
@@ -232,37 +239,44 @@ def pedirDireccion():
 """
 def ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution):
 	try:
+		# La primera vez que se ejecuta el codigo se muestra una interfaz diferente
 		if firstExecution == True:
+
 			googleAPI.obtenerDirecciones(Origen,Destino)
 			respuesta = responder()
-	 		# Falta corregir esta parte
 
+			# Por si las direcciones son erroneas
 			if respuesta == False:
 				pedirDireccion()
 
-			dia = time.strftime("%d/%m/%y")
-			nombreArchivo = "registro" + dia
-
-			archivo = open("registroTiempos" + ".txt","w")
-			archivo.write("\n" + dia)
-			archivo.write("\nOrigen: " + RegOrigen + "\nDestino: " + RegDestino + "\n\n")
-			archivo.close()
 			respuesta = desplegarMenu1()
+
 		else:
+			# La segunda vez que se ejecuta se muestra otra interfaz con una opcion más.
 			respuesta = desplegarMenu2()
 
 		if respuesta == 1:
+			# Se llama a la funcion que hace la consulta a la API
 			consulta(Origen,Destino)
+			# Se cambia la bandera de la primera ejecucion
 			firstExecution = False
-			enter = raw_input("Presione enter...")
+			enter = raw_input("Proceso realizado, presione enter...")
+			# Se vuelve a ejecutar la funcion
 			ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution)
+
 		elif respuesta == 2:
+			# Se llama a la funcion que hace el registro
 			registro(Origen,Destino)
+			# Se cambia la bandera de la primera ejecución
 			firstExecution = False
-			enter = raw_input("Presione enter...")
+			enter = raw_input("Proceso realizado, presione enter...")
+			# Se vuelve a ejecutar esta función
 			ejecutar(Origen,Destino,RegOrigen,RegDestino,firstExecution)
+
 		elif respuesta == 3 and firstExecution == False:
+			# Se vuelve a pedir la direccion
 			pedirDireccion()
+
 		else:
 			print("Auf Wiedersehen")
 			quit()
