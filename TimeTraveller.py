@@ -107,21 +107,33 @@ def desplegarMenu2():
 
 def registro(Origen,Destino):
 	try:
-		tiempo = 60 * 30
-		for i in range(1,48):
+		tiempo = int(raw_input("Ingresa el intervalo entre registros (min): "))
+		tiempo = tiempo * 60
+
+		nu_capturas = int(raw_input("Ingresa el numero de captura de datos: "))
+		clear()
+		print "Intervalos entre caputura de datos: " + str(tiempo/60)
+		print "Numero de capturas de datos: " + str(nu_capturas)
+		for i in range(1,nu_capturas):
+			# Se abre el archivo donde se va a almacenar los datos
 			archivo = open("registroTiempos.txt","a")
 			print("Ida: ")
+			# Se obtiene el tiempo de ida
 			tiempoTraslado = googleAPI.obtenerTiempo(Origen,Destino)
 			archivo.write("Ida:\n")
+			# Obtenemos la hora en que se hizo el registro
 			registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
+			# escribimos en el archivo el registro completo
 			archivo.write(registro)
 
+			# Hacemos el mismo proceso que el anterior solo que para obtener el regreso
 			print("Regreso: ")
 			tiempoTraslado = googleAPI.obtenerTiempo(Destino,Origen)
 			archivo.write("Regreso:\n")
 			registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
 			archivo.write(registro)
 			archivo.close()
+			print "Registro No " + str(i)
 			time.sleep(tiempo)
 	except KeyError:
 		print("No se pudo obtener los datos")
