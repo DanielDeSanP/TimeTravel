@@ -107,13 +107,18 @@ def desplegarMenu2():
 
 def registro(Origen,Destino):
 	try:
+		# Entrada del tiempo
 		tiempo = int(raw_input("Ingresa el intervalo entre registros (min): "))
 		tiempo = tiempo * 60
-
+		# Numero de capturas de datos
 		nu_capturas = int(raw_input("Ingresa el numero de captura de datos: "))
+		# Ruta absoluta del archivo de registros
 		ruta_absoluta = raw_input("Si deseas ingresar alguna ruta para el archivo de registros, escríbela,\nsi no, simplemente presiona enter...")
 		clear()
+
+		# Obtenemos la fecha actual 
 		dia = time.strftime("%d/%m/%y")
+		# Abrimos el archivo y escribimos el día, origen y destino
 		archivo = open(ruta_absoluta + "registroTiempos.txt","w")
 		archivo.write("\n" + dia)
 		archivo.write("\nOrigen: " + Origen + "\nDestino: " + Destino + "\n\n")
@@ -121,6 +126,7 @@ def registro(Origen,Destino):
 
 		print "Intervalos entre caputura de datos: " + str(tiempo/60)
 		print "Numero de capturas de datos: " + str(nu_capturas)
+
 		for i in range(1,nu_capturas):
 			# Se abre el archivo donde se va a almacenar los datos
 			archivo = open("registroTiempos.txt","a")
@@ -143,10 +149,13 @@ def registro(Origen,Destino):
 			print "Registro No " + str(i)
 			time.sleep(tiempo)
 	except KeyError:
+		# En caso de que el json no se haya obtenido apropiadamente
 		print("No se pudo obtener los datos")
 	except KeyboardInterrupt:
+		# En caso de que se haga una interrucion con ctrl +  c
 		print("Proceso Interrumpido")
 	except:
+		# Para cualquiero otro error
 		print("Algo salió mal")
 
 
@@ -168,23 +177,30 @@ def registro(Origen,Destino):
 """
 def consulta(Origen,Destino):
 	try:
+		# Abrimos el archivo de registros
 		archivo = open("registroTiempos.txt","a")
+		# Obtenemos los datos para la ida y los grabamos en el archivo
 		print("Ida: ")
 		tiempoTraslado = googleAPI.obtenerTiempo(Origen,Destino)
 		archivo.write("Ida:\n")
 		registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
 		archivo.write(registro)
+		# Obtenemos los datos de regreso y lo grabamos en el  archivo
 		print("Regreso: ")
 		tiempoTraslado = googleAPI.obtenerTiempo(Destino,Origen)
 		archivo.write("Regreso:\n")
 		registro = time.strftime("%l : %M %p") + "----> " + tiempoTraslado + "\n"
 		archivo.write(registro)
 		archivo.close()		
+
 	except KeyboardInterrupt:
+		# En caos de que se haga una interrupcion con ctrl + c
 		print("Proceso interrumpido")
 	except KeyError:
+		# En caso de que el json no se haya leído bien
 		print("No se pudo obtener los datos")
 	except:
+		# En caso de que otro error ocurra
 		print("Algo Salio Mal")
 """
 	Funcion: pedir direccion
